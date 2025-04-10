@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Information Form</title>
+</head>
+<body>
+    <section class="InfoForm">
+        <div class="Form Header">
+            <h1>خلينا نتعرف عليك أكثر</h1>
+            <p>حتى تصير جزء من أبواب، املي الاستمارة وخلي مهاراتك تحجي!</p>
+        </div>
+        <div class="FormBody">
+            <form onsubmit="return validateForm()">
+
+                <label for="fullName">الاسم الكامل</label>
+                <input type="text" id="fullName" name="fullName" required>
+                
+                <label for="phoneNumber">رقم الهاتف</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                
+                <label for="experience">الخبرة السابقة</label>
+                <textarea id="experience" name="experience" required></textarea>
+
+                <div class="FormButton">
+                    <button type="submit">إرسال</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

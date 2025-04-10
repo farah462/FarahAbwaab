@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+body{
+    font-family: 'Tajawal';
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.StartTest{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+    margin-top: 100px;
+}
+.HeaderInfo h1{
+    font-size: 42px;
+    color: #1D4ED8;
+}
+.StartTestButton button{
+    padding: 10px 60px;
+    background-color: #1D4ED8;
+    font-family: 'Tajawal';
+    color: white;
+    font-size: 22px;
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+} 
+.StartTestButton button:hover {
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* END OF INDEX CSS */
+
+/* START OF FORM CSS */
+.InfoForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+    margin-top: 100px;
+}
+.FormBody{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 400px;
+    direction: rtl;
+}
+.FormBody label {
+    font-size: 18px;
+    color: #1D4ED8;
+    text-align: right;
+    width: 100%;
+    display: block;
+}
+.FormBody input, .FormBody textarea {
+    padding: 10px;
+    border: 1.5px solid #cccccc98;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Tajawal';
+    width: 100%;
+}
+.FormBody .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+.FormButton {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.FormButton button {
+    padding: 10px 80px;
+    background-color: #1D4ED8;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+.FormButton button:hover {
+    animation: pulse 1s infinite;
+}
+
+/* END OF FORM CSS */
+
+/* START OF SUBJECT CSS */
+.Subjects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 50px;
+    margin-top: 100px;
+}
+.SubjectHeader h1 {
+    font-size: 42px;
+    color: #1D4ED8;
+}
+.SubjectsCards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+.SubjectCard {
+    background-color: rgba(10, 60, 190, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 250px; /* Set a fixed width for each card */
+}
+.SubjectCard img {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+.SubjectCard h4 {
+    font-size: 20px;
+    color: #1D4ED8;
+}
+
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .SubjectHeader h1{
+        font-size: 30px;
+    }
+    .SubjectsCards {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+    }
+    .SubjectCard {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+        width: 100%; /* Make the card take full width on smaller screens */
+        max-width: 350px; /* Optional: Set a max-width for better appearance */
+    }
+    .SubjectCard img {
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
+    .SubjectCard h4 {
+        margin: 0;
+    }
+}
+
+.container {
+    width: 60%;
+    height: 100vh;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#examFrame {
+    width: 100%;
+    height: 600px;
+    border: none;
+    display: none;
+}
+
+.start-button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+#cheatScreen, #timeoutScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    z-index: 9999;
+}
+
+#timer {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: red;
+}
+
+#passwordPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    z-index: 99999;
+    text-align: center;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان الكيمياء</title>
+    <style>
+        body {
+            user-select: none;
+            overflow: hidden;
+            background-color: white;
+            transition: background-color 1s ease;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>امتحان الكيمياء</h1>
+        <div id="timer" style="display: none;"></div>
+        <p>اضغط على الزر أدناه لبدء الامتحان.</p>
+        <button id="startButton" class="start-button" onclick="showPasswordPopup()">ابدأ الامتحان</button>
+        <iframe id="examFrame" src="https://forms.gle/cQLHE83GD5UWuXi68" allowfullscreen></iframe>
+    </div>
+
+    <div id="cheatScreen">
+        <div>🚫 نحن لا نحب الغش!</div>
+    </div>
+
+    <div id="timeoutScreen">
+        <div>⏰ انتهى الوقت! الرجاء تسليم الامتحان.</div>
+    </div>
+
+    <!-- Password Popup -->
+    <div id="passwordPopup">
+        <h3>أدخل كلمة المرور للبدء</h3>
+        <input type="password" id="passwordInput" placeholder="Password" style="padding: 10px; font-size: 16px; margin-top: 10px;">
+        <br><br>
+        <button onclick="checkPassword()" style="padding: 10px 20px; font-size: 16px; background-color: blue; color: white; border: none; border-radius: 5px;">دخول</button>
+    </div>
+
+    <script src="script.js">
+       
+    </script>
+</body>
+</html>
