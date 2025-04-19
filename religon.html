@@ -3,25 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>امتحان التربية الأسلامية</title>
+    <title>امتحان التربية الإسلامية</title>
     <style>
         body {
             user-select: none;
             overflow: hidden;
             background-color: white;
             transition: background-color 1s ease;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        #block-screen {
+            display: none;
+            background: black;
+            color: white;
+            font-size: 30px;
+            text-align: center;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            padding-top: 40vh;
         }
     </style>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div id="block-screen">
+        تم الخروج من الامتحان وحرمانك منه!
+    </div>
+
     <div class="container">
         <h1>امتحان التربية الإسلامية</h1>
         <div id="timer" style="display: none;"></div>
         <p>اضغط على الزر أدناه لبدء الامتحان.</p>
         <button id="startButton" class="start-button" onclick="showPasswordPopup()">ابدأ الامتحان</button>
-        <iframe id="examFrame" src="https://forms.gle/NAHFEfZ9BNvipHVs8" allowfullscreen></iframe>
+        <iframe id="examFrame" src="https://forms.gle/pRnwrQAwuqa54HY19" allowfullscreen></iframe>
     </div>
 
     <div id="cheatScreen">
@@ -41,5 +61,28 @@
     </div>
 
     <script src="script.js"></script>
+
+    <script>
+        // كود الحماية عند الخروج من الصفحة أو التبديل
+        window.addEventListener("blur", blockScreen);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                blockScreen();
+            }
+        });
+
+        function blockScreen() {
+            document.body.innerHTML = "";
+            const blockDiv = document.createElement("div");
+            blockDiv.id = "block-screen";
+            blockDiv.innerText = "تم الخروج من الامتحان وحرمانك منه!";
+            document.body.appendChild(blockDiv);
+            blockDiv.style.display = "block";
+
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    </script>
 </body>
 </html>
