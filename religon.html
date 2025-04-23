@@ -6,8 +6,8 @@
   <title>امتحان التربية الاسلامية</title>
   <style>
     body {
+      
       user-select: none;
-      overflow: auto;
       background-color: white;
       margin: 0;
       font-family: sans-serif;
@@ -23,6 +23,7 @@
       height: 600px;
       border: none;
       margin-top: 20px;
+      display: none;
     }
 
     #block-screen, #cheat-warning, #timeoutScreen, #oneMinuteWarning {
@@ -40,25 +41,14 @@
       font-weight: bold;
     }
 
-    #cheat-warning {
-      background-color: #ffcc00;
-      color: black;
-    }
-
-    #timeoutScreen {
-      background-color: darkred;
-      color: white;
-    }
-
-    #oneMinuteWarning {
-      background-color: #ff8800;
-      color: white;
-    }
+    #cheat-warning { background-color: #ffcc00; color: black; }
+    #timeoutScreen { background-color: darkred; color: white; }
+    #oneMinuteWarning { background-color: #ff8800; color: white; }
 
     #passwordPopup {
       display: none;
-      text-align: center;
       margin-top: 30px;
+      text-align: center;
     }
 
     input[type="password"] {
@@ -82,78 +72,56 @@
       margin-top: 10px;
       font-weight: bold;
       color: darkred;
+      display: none;
     }
   </style>
 </head>
-
-<body 
-  oncopy="return false" 
-  onpaste="return false" 
-  oncut="return false" 
-  oncontextmenu="return false"
-  ontouchstart="return false"
-  onselectstart="return false"
->
-
-  <div id="block-screen">
-    تم الخروج مرتين من الامتحان! تم حرمانك نهائيًا.
-  </div>
-
-  <div id="cheat-warning">
-    🚨 تم رصد خروجك من صفحة الامتحان! هذه أول تحذير، المرة القادمة سيتم حرمانك!
-  </div>
-
-  <div id="timeoutScreen">
-    ⏰ انتهى الوقت! الرجاء تسليم الامتحان.
-  </div>
-
-  <div id="oneMinuteWarning">
-    ⏳ تبقّت دقيقة واحدة! يرجى الاستعداد لتسليم الامتحان.
-  </div>
+<body>
+  <div id="block-screen">تم الخروج مرتين من الامتحان! تم حرمانك نهائيًا.</div>
+  <div id="cheat-warning">🚨 أول تحذير: لا تغادر صفحة الامتحان!</div>
+  <div id="timeoutScreen">⏰ انتهى الوقت! الرجاء تسليم الامتحان.</div>
+  <div id="oneMinuteWarning">⏳ تبقّت دقيقة واحدة!</div>
 
   <div class="container">
-    <h1>امتحان التربية الاسلامية</h1>
+    <h1>امتحان الاسلامية</h1>
     <div id="timer"></div>
     <p>اضغط على الزر أدناه لبدء الامتحان.</p>
-    <button id="startButton" onclick="showPasswordPopup()">ابدأ الامتحان</button>
+    <button id="startButton">ابدأ الامتحان</button>
 
     <div id="passwordPopup">
       <h3>أدخل كلمة المرور للبدء</h3>
       <input type="password" id="passwordInput" placeholder="Password" />
       <br><br>
-      <button onclick="checkPassword()">دخول</button>
+      <button id="confirmPasswordButton">دخول</button>
     </div>
 
-    <iframe id="examFrame" src="https://forms.gle/pRnwrQAwuqa54HY19" style="display: none;"></iframe>
+    <iframe id="examFrame" src="https://forms.gle/pRnwrQAwuqa54HY19"></iframe>
   </div>
 
   <script>
     let cheatCount = 0;
     let countdownInterval;
 
-    function showPasswordPopup() {
+    document.getElementById("startButton").addEventListener("click", () => {
       document.getElementById("passwordPopup").style.display = "block";
       document.getElementById("startButton").style.display = "none";
-    }
+    });
 
-    function checkPassword() {
+    document.getElementById("confirmPasswordButton").addEventListener("click", () => {
       const input = document.getElementById("passwordInput").value;
-      const correctPassword = "998024"; // ← غيّري كلمة السر هنا
-
-      if (input === correctPassword) {
+      if (input === "998024") {
         document.getElementById("passwordPopup").style.display = "none";
         document.getElementById("examFrame").style.display = "block";
         document.getElementById("timer").style.display = "block";
-        startCountdown(32); // ← مدة الامتحان بالدقائق
+        startCountdown(32);
       } else {
         alert("كلمة المرور خاطئة!");
       }
-    }
+    });
 
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         cheatCount++;
-
         if (cheatCount === 1) {
           document.getElementById("cheat-warning").style.display = "block";
           setTimeout(() => {
@@ -166,24 +134,19 @@
           blockDiv.innerText = "تم الخروج مرتين من الامتحان! تم حرمانك نهائيًا.";
           document.body.appendChild(blockDiv);
           blockDiv.style.display = "block";
-
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          }
         }
       }
     });
 
     function startCountdown(minutes) {
       let seconds = minutes * 60;
-      let timerElement = document.getElementById("timer");
       let oneMinuteWarningShown = false;
+      let timerElement = document.getElementById("timer");
 
-      countdownInterval = setInterval(function () {
-        const minutesLeft = Math.floor(seconds / 60);
-        const secondsLeft = seconds % 60;
-
-        timerElement.innerText = `الوقت المتبقي: ${minutesLeft}:${secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}`;
+      countdownInterval = setInterval(() => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        timerElement.innerText = `الوقت المتبقي: ${mins}:${secs < 10 ? "0" + secs : secs}`;
 
         if (seconds === 60 && !oneMinuteWarningShown) {
           oneMinuteWarningShown = true;
@@ -202,20 +165,6 @@
         seconds--;
       }, 1000);
     }
-
-    // 🔒 منع النسخ واللصق والقص من الكيبورد أو اللمس
-    document.addEventListener('keydown', function(e) {
-      if ((e.ctrlKey || e.metaKey) && ['c', 'v', 'x', 'a'].includes(e.key.toLowerCase())) {
-        e.preventDefault();
-      }
-    });
-
-    document.addEventListener('selectstart', e => e.preventDefault());
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('touchstart', e => {
-      if (e.touches.length > 1) e.preventDefault();
-    });
   </script>
-
 </body>
 </html>
