@@ -10,35 +10,7 @@ function showForm() {
     startCountdown(45); //start countdown for 45 minutes
 }
 
-function startCountdown(minutes) {
-    let time = minutes * 60;
-    const timerElement = document.getElementById("timer");
-    let warned = false;
 
-    const countdown = setInterval(() => {
-        let m = Math.floor(time / 60).toString().padStart(2, '0');
-        let s = (time % 60).toString().padStart(2, '0');
-        timerElement.textContent = `الوقت المتبقي: ${m}:${s}`;
-
-        if (time === 60 && !warned) {
-            alert("⚠️ تبقت دقيقة واحدة! الرجاء الضغط على زر الإرسال في الفورم قبل انتهاء الوقت.");
-            warned = true;
-        }
-
-        if (time <= 0) {
-            clearInterval(countdown);
-            showTimeoutScreen();
-        }
-
-        time--;
-    }, 1000);
-}
-
-function showTimeoutScreen() {
-    document.getElementById("timeoutScreen").style.display = "flex";
-    document.querySelector(".container").style.display = "none";
-    document.getElementById("examFrame").style.display = "none";
-}
 
 function showCheatScreen() {
     document.getElementById("cheatScreen").style.display = "flex";

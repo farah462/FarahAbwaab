@@ -1,88 +1,219 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>امتحان الأحياء</title>
-    <style>
-        body {
-            user-select: none;
-            overflow: hidden;
-            background-color: white;
-            transition: background-color 1s ease;
-            margin: 0;
-            font-family: sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>امتحان الأحياء</title>
+  <style>
+    body {
+      user-select: none;
+      overflow: auto;
+      background-color: white;
+      margin: 0;
+      font-family: sans-serif;
+    }
 
-        #block-screen {
-            display: none;
-            background: black;
-            color: white;
-            font-size: 30px;
-            text-align: center;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 9999;
-            padding-top: 40vh;
-        }
-    </style>
-    <link rel="stylesheet" href="style.css">
+    .container {
+      padding: 30px;
+      text-align: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+      display: none;
+    }
+
+    #block-screen, #cheat-warning, #timeoutScreen, #oneMinuteWarning {
+      display: none;
+      background: black;
+      color: white;
+      font-size: 30px;
+      text-align: center;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      padding-top: 40vh;
+      font-weight: bold;
+    }
+
+    #cheat-warning {
+      background-color: #ffcc00;
+      color: black;
+    }
+
+    #timeoutScreen {
+      background-color: darkred;
+    }
+
+    #oneMinuteWarning {
+      background-color: #ff8800;
+    }
+
+    #passwordPopup {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: blue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #timer {
+      font-size: 20px;
+      margin-top: 10px;
+      font-weight: bold;
+      color: darkred;
+    }
+  </style>
 </head>
-<body>
-    <div id="block-screen">
-        تم الخروج من الامتحان وحرمانك منه!
-    </div>
 
-    <div class="container">
-        <h1>امتحان الأحياء</h1>
-        <div id="timer" style="display: none;"></div>
-        <p>اضغط على الزر أدناه لبدء الامتحان.</p>
-        <button id="startButton" class="start-button" onclick="showPasswordPopup()">ابدأ الامتحان</button>
-        <iframe id="examFrame" src="https://forms.gle/NAHFEfZ9BNvipHVs8" allowfullscreen></iframe>
-    </div>
+<body 
+  oncopy="return false" 
+  onpaste="return false" 
+  oncut="return false" 
+  oncontextmenu="return false"
+  ontouchstart="return false"
+  onselectstart="return false"
+>
 
-    <div id="cheatScreen">
-        <div>🚫 نحن لا نحب الغش!</div>
-    </div>
+  <div id="block-screen">
+    تم الخروج مرتين من الامتحان! تم حرمانك نهائيًا.
+  </div>
 
-    <div id="timeoutScreen">
-        <div>⏰ انتهى الوقت! الرجاء تسليم الامتحان.</div>
-    </div>
+  <div id="cheat-warning">
+    🚨 تم رصد خروجك من صفحة الامتحان! هذه أول تحذير، المرة القادمة سيتم حرمانك!
+  </div>
 
-    <!-- Password Popup -->
+  <div id="timeoutScreen">
+    ⏰ انتهى الوقت! الرجاء تسليم الامتحان.
+  </div>
+
+  <div id="oneMinuteWarning">
+    ⏳ تبقّت دقيقة واحدة! يرجى الاستعداد لتسليم الامتحان.
+  </div>
+
+  <div class="container">
+    <h1>امتحان الأحياء</h1>
+    <div id="timer"></div>
+    <p>اضغط على الزر أدناه لبدء الامتحان.</p>
+    <button id="startButton" onclick="showPasswordPopup()">ابدأ الامتحان</button>
+
     <div id="passwordPopup">
-        <h3>أدخل كلمة المرور للبدء</h3>
-        <input type="password" id="passwordInput" placeholder="Password" style="padding: 10px; font-size: 16px; margin-top: 10px;">
-        <br><br>
-        <button onclick="checkPassword()" style="padding: 10px 20px; font-size: 16px; background-color: blue; color: white; border: none; border-radius: 5px;">دخول</button>
+      <h3>أدخل كلمة المرور للبدء</h3>
+      <input type="password" id="passwordInput" placeholder="Password" />
+      <br><br>
+      <button onclick="checkPassword()">دخول</button>
     </div>
 
-    <script src="script.js"></script>
+    <iframe id="examFrame" src="https://forms.gle/NAHFEfZ9BNvipHVs8"></iframe>
+  </div>
 
-    <script>
-        // كود الحماية عند الخروج من الصفحة أو التبديل
-        window.addEventListener("blur", blockScreen);
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
-                blockScreen();
-            }
-        });
+  <script>
+    let cheatCount = 0;
+    let countdownInterval;
 
-        function blockScreen() {
-            document.body.innerHTML = ""; // يمسح كل محتوى الصفحة
-            const blockDiv = document.createElement("div");
-            blockDiv.id = "block-screen";
-            blockDiv.innerText = "تم الخروج من الامتحان وحرمانك منه!";
-            document.body.appendChild(blockDiv);
-            blockDiv.style.display = "block";
+    function showPasswordPopup() {
+      document.getElementById("passwordPopup").style.display = "block";
+      document.getElementById("startButton").style.display = "none";
+    }
 
-            // الخروج من وضع ملء الشاشة (اختياري)
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value;
+      const correctPassword = "998024"; // ← غيّري كلمة السر هنا
+
+      if (input === correctPassword) {
+        document.getElementById("passwordPopup").style.display = "none";
+        document.getElementById("examFrame").style.display = "block";
+        document.getElementById("timer").style.display = "block";
+        startCountdown(32); // ← مدة الامتحان بالدقائق
+      } else {
+        alert("كلمة المرور خاطئة!");
+      }
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cheatCount++;
+
+        if (cheatCount === 1) {
+          document.getElementById("cheat-warning").style.display = "block";
+          setTimeout(() => {
+            document.getElementById("cheat-warning").style.display = "none";
+          }, 3000);
+        } else if (cheatCount >= 2) {
+          document.body.innerHTML = "";
+          const blockDiv = document.createElement("div");
+          blockDiv.id = "block-screen";
+          blockDiv.innerText = "تم الخروج مرتين من الامتحان! تم حرمانك نهائيًا.";
+          document.body.appendChild(blockDiv);
+          blockDiv.style.display = "block";
+
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
         }
-    </script>
+      }
+    });
+
+    function startCountdown(minutes) {
+      let seconds = minutes * 60;
+      let timerElement = document.getElementById("timer");
+      let oneMinuteWarningShown = false;
+
+      countdownInterval = setInterval(function () {
+        const minutesLeft = Math.floor(seconds / 60);
+        const secondsLeft = seconds % 60;
+
+        timerElement.innerText = `الوقت المتبقي: ${minutesLeft}:${secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}`;
+
+        if (seconds === 60 && !oneMinuteWarningShown) {
+          oneMinuteWarningShown = true;
+          document.getElementById("oneMinuteWarning").style.display = "block";
+          setTimeout(() => {
+            document.getElementById("oneMinuteWarning").style.display = "none";
+          }, 5000);
+        }
+
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("examFrame").style.display = "none";
+          document.getElementById("timeoutScreen").style.display = "block";
+        }
+
+        seconds--;
+      }, 1000);
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && ['c', 'v', 'x', 'a'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('touchstart', e => {
+      if (e.touches.length > 1) e.preventDefault();
+    });
+  </script>
+
 </body>
 </html>
