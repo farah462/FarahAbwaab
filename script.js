@@ -7,10 +7,8 @@ function showForm() {
     startButton.style.display = "none";
     timerElement.style.display = "block";
 
-    startCountdown(45); //start countdown for 45 minutes
+    startCountdown(45); // بدء العد التنازلي لمدة 45 دقيقة
 }
-
-
 
 function showCheatScreen() {
     document.getElementById("cheatScreen").style.display = "flex";
